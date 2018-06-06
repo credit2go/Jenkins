@@ -54,7 +54,12 @@ String generateBody(Map params = [:]) {
     def version = params.containsKey('version') ? params.version : ''
     def svn_version = params.containsKey('svn_version') ? params.svn_version : ''
     def redmineID = params.containsKey('redmineID') ? params.redmineID : ''
-    String message = messageTemplate.successReleaseBody()
+    String message = '''{envType}{artifactId}新版本已经发布[胜利]:
+应用名称：{artifactId}
+版本号：{version}
+SVN版本号：{svn_version}
+变更内容说明：https://support.credit2go.cn/issues/{RedmineID}
+访问地址：https://{env}.credit2go.cn/{artifactId}'''
     message = message.replace('{envType}', envType)
     message = message.replace('{artifactId}', artifactId)
     message = message.replace('{version}', version)
@@ -68,10 +73,9 @@ String generateSubject(Map params = [:]) {
     def envType = params.containsKey('envType') ? params.envType : ''
     def artifactId = params.containsKey('artifactId') ? params.artifactId : ''
     def version = params.containsKey('version') ? params.version : ''
-    message = messageTemplate.successReleaseSubject()
+    message = '[版本更新]{artifactId}应用发布{envType}，版本号：{version}'
     message = message.replace('{envType}', envType)
     message = message.replace('{artifactId}', artifactId)
     message = message.replace('{version}', version)
-    template = '[版本更新]{artifactId}应用发布{envType}，版本号：{version}'
     return message
 }
